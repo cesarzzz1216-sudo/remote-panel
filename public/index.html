@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Headquarters</title>
+<link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="aurora"></div>
+<canvas id="particles-canvas"></canvas>
+<canvas id="matrix-canvas"></canvas>
+<canvas id="starfield-canvas"></canvas>
+<canvas id="vortex-canvas"></canvas>
+<div class="scanline-overlay"></div>
+<div class="app">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo-wrap">
+      <img src="logo.png" alt="Logo" class="logo" onerror="this.style.display='none'"/>
+      <span class="logo-text">Headquarters</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" data-tab="esp">ESP</button>
+      <button class="nav-btn" data-tab="aim">Aimbot</button>
+      <button class="nav-btn" data-tab="silent">Silent</button>
+      <button class="nav-btn" data-tab="exploits">Exploits</button>
+      <button class="nav-btn" data-tab="misc">Misc</button>
+      <button class="nav-btn" data-tab="settings">Settings</button>
+    </nav>
+    <div class="status-box glass">
+      <div class="status-row">
+        <span class="dot" id="dot"></span>
+        <span id="status-text">Disconnected</span>
+      </div>
+      <div class="status-diag" id="diag-text">—</div>
+      <div class="status-user" id="user-text"></div>
+      <div class="license-row" id="license-row" style="display:none">
+        <span class="license-label">License:</span>
+        <span class="license-val" id="license-val"></span>
+      </div>
+    </div>
+    <div class="sidebar-actions">
+      <button class="btn-action btn-reconnect" id="btn-reconnect">↺ Reconnect</button>
+      <button class="btn-action btn-disconnect" id="btn-disconnect">✕ Disconnect</button>
+      <button class="btn-action btn-signout" id="btn-signout">→ Sign Out</button>
+    </div>
+  </aside>
+
+  <!-- HAMBURGER (mobile) -->
+  <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+  <div class="overlay-bg" id="overlay-bg"></div>
+
+  <!-- MAIN -->
+  <main class="main">
+    <header class="topbar glass">
+      <h1 class="page-title" id="page-title">ESP</h1>
+      <button class="btn-save" id="btn-save">Apply</button>
+    </header>
+
+    <!-- TAB: ESP -->
+    <section class="tab active" id="tab-esp">
+      <div class="grid">
+        <div class="card glass"><div class="card-title">Visuals</div>
+          <div class="toggle-row"><label>Enable ESP</label><label class="toggle"><input type="checkbox" id="esp_en"/><span></span></label></div>
+          <div class="toggle-row"><label>Box</label><label class="toggle"><input type="checkbox" id="esp_box"/><span></span></label></div>
+          <div class="toggle-row"><label>Skeleton</label><label class="toggle"><input type="checkbox" id="esp_skel"/><span></span></label></div>
+          <div class="toggle-row"><label>Health Bar</label><label class="toggle"><input type="checkbox" id="esp_hp"/><span></span></label></div>
+          <div class="toggle-row"><label>Names</label><label class="toggle"><input type="checkbox" id="esp_name"/><span></span></label></div>
+          <div class="toggle-row"><label>Distance</label><label class="toggle"><input type="checkbox" id="esp_dist"/><span></span></label></div>
+          <div class="toggle-row"><label>Snaplines</label><label class="toggle"><input type="checkbox" id="esp_lines"/><span></span></label></div>
+          <div class="toggle-row"><label>Weapon Name</label><label class="toggle"><input type="checkbox" id="esp_gun"/><span></span></label></div>
+          <div class="toggle-row"><label>Visible Check</label><label class="toggle"><input type="checkbox" id="esp_vis"/><span></span></label></div>
+          <div class="toggle-row"><label>Radar</label><label class="toggle"><input type="checkbox" id="radar"/><span></span></label></div>
+        </div>
+        <div class="card glass"><div class="card-title">Range</div>
+          <div class="slider-row"><label>Max Distance <span id="esp_maxd_v">300</span>m</label>
+            <input type="range" id="esp_maxd" min="50" max="600" step="10"/>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: AIMBOT -->
+    <section class="tab" id="tab-aim">
+      <div class="grid">
+        <div class="card glass"><div class="card-title">Aimbot</div>
+          <div class="toggle-row"><label>Enable</label><label class="toggle"><input type="checkbox" id="aim_en"/><span></span></label></div>
+          <div class="toggle-row"><label>Fast Reload</label><label class="toggle"><input type="checkbox" id="fast_reload"/><span></span></label></div>
+          <div class="select-row"><label>Style</label>
+            <select id="aim_style">
+              <option value="0">Legit</option>
+              <option value="1">Rage</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: SILENT -->
+    <section class="tab" id="tab-silent">
+      <div class="grid">
+        <div class="card glass"><div class="card-title">Silent Aim</div>
+          <div class="toggle-row"><label>Enable</label><label class="toggle"><input type="checkbox" id="sil_en"/><span></span></label></div>
+          <div class="toggle-row"><label>Show FOV</label><label class="toggle"><input type="checkbox" id="sil_show"/><span></span></label></div>
+          <div class="slider-row"><label>FOV <span id="sil_fov_v">100</span></label>
+            <input type="range" id="sil_fov" min="10" max="400" step="5"/></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: EXPLOITS -->
+    <section class="tab" id="tab-exploits">
+      <div class="grid">
+        <div class="card glass"><div class="card-title">Weapon</div>
+          <div class="toggle-row"><label>No Recoil</label><label class="toggle"><input type="checkbox" id="no_recoil"/><span></span></label></div>
+          <div class="toggle-row"><label>Rapid Fire</label><label class="toggle"><input type="checkbox" id="rapid"/><span></span></label></div>
+          <div class="toggle-row"><label>Fast Medkit</label><label class="toggle"><input type="checkbox" id="fastmed"/><span></span></label></div>
+        </div>
+        <div class="card glass"><div class="card-title">Movement</div>
+          <div class="toggle-row"><label>Speed Hack</label><label class="toggle"><input type="checkbox" id="speedhack"/><span></span></label></div>
+          <div class="toggle-row"><label>Free Cam</label><label class="toggle"><input type="checkbox" id="freecam"/><span></span></label></div>
+          <div class="toggle-row"><label>Spin Bot</label><label class="toggle"><input type="checkbox" id="spin"/><span></span></label></div>
+          <div class="slider-row"><label>Spin Speed <span id="spin_spd_v">3.0</span></label>
+            <input type="range" id="spin_spd" min="0.1" max="10" step="0.1"/></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: MISC -->
+    <section class="tab" id="tab-misc">
+      <div class="grid">
+        <div class="card glass"><div class="card-title">System</div>
+          <div class="toggle-row"><label>Stream Mode</label><label class="toggle"><input type="checkbox" id="stream"/><span></span></label></div>
+          <div class="toggle-row"><label>DMA Mode</label><label class="toggle"><input type="checkbox" id="dma_mode"/><span></span></label></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB: SETTINGS -->
+    <section class="tab" id="tab-settings">
+      <div class="grid">
+        <div class="card glass"><div class="card-title">Accent Color</div>
+          <div class="color-presets" id="color-presets">
+            <button class="color-swatch active" data-color="#4D9FFF" style="--sw:#4D9FFF" title="Blue"></button>
+            <button class="color-swatch" data-color="#A855F7" style="--sw:#A855F7" title="Purple"></button>
+            <button class="color-swatch" data-color="#3DFFA0" style="--sw:#3DFFA0" title="Green"></button>
+            <button class="color-swatch" data-color="#FF4455" style="--sw:#FF4455" title="Red"></button>
+            <button class="color-swatch" data-color="#FF8C42" style="--sw:#FF8C42" title="Orange"></button>
+            <button class="color-swatch" data-color="#FF69B4" style="--sw:#FF69B4" title="Pink"></button>
+            <button class="color-swatch" data-color="#00D4FF" style="--sw:#00D4FF" title="Cyan"></button>
+          </div>
+          <div class="custom-color-row">
+            <label>Custom Color</label>
+            <input type="color" id="custom-color" value="#4D9FFF"/>
+          </div>
+        </div>
+        <div class="card glass"><div class="card-title">Visual Effects</div>
+          <div class="toggle-row"><label>Glassmorphism</label><label class="toggle"><input type="checkbox" id="fx-glass" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Glow Effects</label><label class="toggle"><input type="checkbox" id="fx-glow" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Animations</label><label class="toggle"><input type="checkbox" id="fx-anim" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Background Gradient</label><label class="toggle"><input type="checkbox" id="fx-gradient" checked/><span></span></label></div>
+        </div>
+        <div class="card glass"><div class="card-title">Background Effects</div>
+          <div class="toggle-row"><label>Floating Particles</label><label class="toggle"><input type="checkbox" id="fx-particles" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Particle Lines</label><label class="toggle"><input type="checkbox" id="fx-particle-lines" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Aurora Glow</label><label class="toggle"><input type="checkbox" id="fx-aurora" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Matrix Rain</label><label class="toggle"><input type="checkbox" id="fx-matrix"/><span></span></label></div>
+          <div class="toggle-row"><label>Starfield</label><label class="toggle"><input type="checkbox" id="fx-starfield"/><span></span></label></div>
+          <div class="toggle-row"><label>Vortex</label><label class="toggle"><input type="checkbox" id="fx-vortex"/><span></span></label></div>
+          <div class="slider-row"><label>Particle Count <span id="fx-pcount-v">60</span></label>
+            <input type="range" id="fx-pcount" min="10" max="200" step="10" value="60"/>
+          </div>
+          <div class="slider-row"><label>Particle Speed <span id="fx-pspeed-v">1.0</span></label>
+            <input type="range" id="fx-pspeed" min="0.1" max="3.0" step="0.1" value="1.0"/>
+          </div>
+        </div>
+        <div class="card glass"><div class="card-title">Interactive Effects</div>
+          <div class="toggle-row"><label>Card Hover Glow</label><label class="toggle"><input type="checkbox" id="fx-card-glow" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Card Hover Lift</label><label class="toggle"><input type="checkbox" id="fx-card-lift" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Button Ripple</label><label class="toggle"><input type="checkbox" id="fx-ripple" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Mouse Repel Particles</label><label class="toggle"><input type="checkbox" id="fx-mouse-repel"/><span></span></label></div>
+          <div class="toggle-row"><label>Cursor Trail</label><label class="toggle"><input type="checkbox" id="fx-cursor-trail"/><span></span></label></div>
+          <div class="toggle-row"><label>Click Burst</label><label class="toggle"><input type="checkbox" id="fx-click-burst" checked/><span></span></label></div>
+        </div>
+        <div class="card glass"><div class="card-title">UI Animations</div>
+          <div class="toggle-row"><label>Logo Pulse</label><label class="toggle"><input type="checkbox" id="fx-logo-pulse" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Logo Shimmer</label><label class="toggle"><input type="checkbox" id="fx-logo-shimmer" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Status Dot Pulse</label><label class="toggle"><input type="checkbox" id="fx-dot-pulse" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Card Entrance</label><label class="toggle"><input type="checkbox" id="fx-card-entrance" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Topbar Glow Line</label><label class="toggle"><input type="checkbox" id="fx-topbar-line" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Sidebar Edge Glow</label><label class="toggle"><input type="checkbox" id="fx-sidebar-line" checked/><span></span></label></div>
+          <div class="toggle-row"><label>Neon Borders</label><label class="toggle"><input type="checkbox" id="fx-neon-borders"/><span></span></label></div>
+          <div class="toggle-row"><label>Scanline Overlay</label><label class="toggle"><input type="checkbox" id="fx-scanlines"/><span></span></label></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
