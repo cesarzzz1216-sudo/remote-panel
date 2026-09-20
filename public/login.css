@@ -1,0 +1,232 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg0: #080808;
+  --bg1: #111111;
+  --bg2: #1C1C1C;
+  --b1:  #2E2E2E;
+  --b2:  #555;
+  --b3:  #999;
+  --hi1: #E8E8E8;
+  --hi2: #F5F5F5;
+  --blue: #4DA6FF;
+  --r: 12px;
+}
+
+body {
+  background: var(--bg0);
+  color: var(--hi2);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#particles-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Glow de fundo ── */
+.bg-glow {
+  position: fixed;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 400px;
+  background: radial-gradient(ellipse at center, rgba(77,166,255,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── Glass ── */
+.glass {
+  background: rgba(20,20,20,0.7);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid rgba(255,255,255,0.06);
+  border-radius: var(--r);
+}
+
+/* ── Login wrap ── */
+.login-wrap {
+  position: relative; z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  width: 100%;
+  max-width: 440px;
+  padding: 20px;
+}
+
+/* ── Brand ── */
+.brand { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+
+.brand-logo-img {
+  width: 72px; height: 72px;
+  object-fit: contain;
+  margin-bottom: 4px;
+  filter: drop-shadow(0 0 10px rgba(77,159,255,0.25));
+}
+
+.brand-name {
+  font-size: 22px; font-weight: 700;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--hi1) 50%, var(--blue) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+
+.brand-sub  { font-size: 13px; color: var(--b3); letter-spacing: .3px; }
+.brand-secure { font-size: 11px; color: #444; margin-top: 2px; }
+
+/* ── Card ── */
+.card {
+  width: 100%;
+  padding: 24px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field-label {
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; color: var(--b3);
+  text-transform: uppercase;
+}
+
+.key-input {
+  width: 100%;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--b1);
+  border-radius: 8px;
+  color: var(--hi2);
+  font-size: 14px;
+  padding: 12px 14px;
+  outline: none;
+  letter-spacing: .5px;
+  transition: border-color .2s, box-shadow .2s;
+  caret-color: var(--blue);
+}
+.key-input::placeholder { color: #444; }
+.key-input:focus {
+  border-color: rgba(77,166,255,0.4);
+  box-shadow: 0 0 0 3px rgba(77,166,255,0.08);
+}
+
+.field-hint { font-size: 11px; color: #444; margin-top: -6px; }
+
+/* ── Remember row ── */
+.remember-row {
+  display: flex; align-items: center;
+  justify-content: space-between; gap: 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--b1);
+  border-radius: 8px;
+  padding: 10px 14px;
+}
+.remember-left { display: flex; flex-direction: column; gap: 2px; }
+.remember-title { font-size: 13px; color: var(--hi1); font-weight: 500; }
+.remember-sub   { font-size: 11px; color: #555; }
+
+/* ── Toggle ── */
+.toggle { position: relative; display: inline-block; width: 42px; height: 24px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle span {
+  position: absolute; inset: 0;
+  background: var(--bg2); border: 1px solid var(--b1);
+  border-radius: 24px; cursor: pointer;
+  transition: background .2s, border-color .2s;
+}
+.toggle span::before {
+  content: ''; position: absolute;
+  width: 16px; height: 16px; left: 3px; top: 3px;
+  background: var(--b2); border-radius: 50%;
+  transition: transform .2s, background .2s;
+}
+.toggle input:checked + span { background: rgba(77,166,255,0.15); border-color: var(--blue); }
+.toggle input:checked + span::before { transform: translateX(18px); background: var(--blue); box-shadow: 0 0 6px rgba(77,166,255,0.5); }
+
+.validate-note { font-size: 11px; color: #3A3A3A; text-align: center; }
+
+/* ── Login button ── */
+.btn-login {
+  width: 100%;
+  background: rgba(77,166,255,0.1);
+  border: 1px solid rgba(77,166,255,0.25);
+  color: var(--blue);
+  border-radius: 8px;
+  padding: 12px;
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background .2s, transform .1s;
+}
+.btn-login:hover {
+  background: rgba(77,166,255,0.18);
+  box-shadow: 0 0 24px rgba(77,166,255,0.15), inset 0 0 12px rgba(77,166,255,0.05);
+}
+.btn-login:active { transform: scale(.98); }
+
+/* ── Login card entrance ── */
+.login-wrap {
+  animation: loginEntry .6s ease backwards;
+}
+@keyframes loginEntry {
+  from { opacity: 0; transform: translateY(24px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* ── Logo float ── */
+.brand-logo-img {
+  animation: logoFloat 4s ease-in-out infinite;
+}
+@keyframes logoFloat {
+  0%,100% { transform: translateY(0); filter: drop-shadow(0 0 10px rgba(77,159,255,0.25)); }
+  50%     { transform: translateY(-6px); filter: drop-shadow(0 0 20px rgba(77,159,255,0.45)); }
+}
+
+/* ── Brand name shimmer ── */
+.brand-name {
+  background-size: 200% 100%;
+  animation: brandShimmer 4s ease-in-out infinite;
+}
+@keyframes brandShimmer {
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
+}
+
+/* ── Input focus glow ── */
+.key-input:focus {
+  border-color: rgba(77,166,255,0.4);
+  box-shadow: 0 0 0 3px rgba(77,166,255,0.08), 0 0 20px rgba(77,166,255,0.06);
+}
+
+/* ── Card hover glow ── */
+.card {
+  transition: border-color .3s, box-shadow .3s, transform .3s;
+}
+.card:hover {
+  border-color: rgba(77,166,255,0.12);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.3), 0 0 30px rgba(77,166,255,0.04);
+  transform: translateY(-2px);
+}
+
+/* ── Error shake ── */
+@keyframes shake {
+  0%,100%{transform:translateX(0)}
+  20%,60%{transform:translateX(-6px)}
+  40%,80%{transform:translateX(6px)}
+}
+.shake { animation: shake .35s ease; }
+
+.check-updates { font-size: 11px; color: #333; text-align: center; cursor: default; }
+
+/* ── Mobile ── */
+@media(max-width:480px){
+  .login-wrap { padding: 16px; }
+  .card { padding: 20px 16px; }
+}
