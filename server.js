@@ -5,8 +5,6 @@ const http    = require('http');
 const { WebSocketServer } = require('ws');
 const path    = require('path');
 
-const { isCiphered, decrypt } = require('./cipher');
-
 const app    = express();
 const server = http.createServer(app);
 const wss    = new WebSocketServer({ server, path: '/dll' });
@@ -67,11 +65,9 @@ wss.on('connection', (ws) => {
 
   ws.on('message', (raw) => {
     const msg = raw.toString();
-    let json = isCiphered(msg) ? decrypt(msg) : msg;
-    if (!json) return;
 
     let data;
-    try { data = JSON.parse(json); } catch { return; }
+    try { data = JSON.parse(msg); } catch { return; }
 
     if (data.t === 'hello') {
       const user = data.u || 'unknown';
