@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+<title>Headquarters</title>
+<link rel="stylesheet" href="login.css"/>
+</head>
+<body>
+  <canvas id="particles-canvas"></canvas>
+  <div class="bg-glow"></div>
+
+  <div class="login-wrap">
+    <!-- Logo -->
+    <div class="brand">
+      <img src="logo.png" alt="Headquarters" class="brand-logo-img" onerror="this.style.display='none'"/>
+      <h1 class="brand-name">Headquarters</h1>
+      <p class="brand-sub">Enter your key to continue</p>
+      <p class="brand-secure">Secure auth session enabled.</p>
+    </div>
+
+    <!-- Card -->
+    <div class="card glass">
+      <div class="field-label">LICENSE KEY</div>
+      <input
+        type="text"
+        id="license-input"
+        class="key-input"
+        placeholder="Enter your key"
+        autocomplete="off"
+        spellcheck="false"
+      />
+      <p class="field-hint">Use the same key linked to your license account.</p>
+
+      <div class="remember-row">
+        <div class="remember-left">
+          <span class="remember-title">Remember me</span>
+          <span class="remember-sub">Keep key saved on this device</span>
+        </div>
+        <label class="toggle">
+          <input type="checkbox" id="remember-me" checked/>
+          <span></span>
+        </label>
+      </div>
+
+      <p class="validate-note">Your key is validated before any remote connection starts.</p>
+
+      <button class="btn-login" id="btn-login">Login</button>
+
+      <p class="check-updates">Check for updates</p>
+    </div>
+  </div>
+
+  <script src="login.js"></script>
+</body>
+</html>
